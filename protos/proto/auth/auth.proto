@@ -14,12 +14,12 @@ service Auth {
 message RegisterArtistRequest {
   string login = 1;
   string password = 2;
+  string name = 3;
 }
 
 message RegisterListenerRequest {
   string login = 1;
   string password = 2;
-  string name = 3;
 }
 
 message RegisterResponse {
