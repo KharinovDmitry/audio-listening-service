@@ -1,0 +1,53 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: always
+    networks:
+      - default
+  auth-service:
+    build: ../auth-service/
+    depends_on:
+      - auth-db
+      - rabbitmq
+    ports:
+      - "8080:8080"
+    networks:
+      - default
+  auth-db:
+    restart: always
+    image: postgres
+    volumes:
+      - ./.database/postgres/data:/var/lib/postgres/data
+    environment:
+      - POSTGRES_USER=${AUTH_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${AUTH_POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    networks:
+      - default
+    ports:
+      - "5436:5432"
+  logger-service:
+    build: ../logger-service/
+    depends_on:
+      - logger-db
+      - rabbitmq
+    ports:
+      - "8081:8080"
+    networks:
+      - default
+  logger-db:
+    restart: always
+    image: postgres
+    volumes:
+      - ./.database/postgres/data:/var/lib/postgres/data
+    environment:
+      - POSTGRES_USER=${LOGGER_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${LOGGER_POSTGRES_PASSWORD}
+      - POSTGRES_DB=${LOGGER_POSTGRES_DB}
+    networks:
+      - default
+    ports:
+      - "5437:5432"

@@ -6,26 +6,12 @@ import (
 	"time"
 )
 
-type HttpConfig struct {
-	Port int `yaml:"port"`
-}
-
-type GRPCConfig struct {
-	Port    int           `yaml:"port"`
-	Timeout time.Duration `yaml:"timeout"`
-}
-
 type Config struct {
-	Env            string        `yaml:"env"`
 	DBConnStr      string        `yaml:"db_conn_str"`
 	MBConnStr      string        `yaml:"mb_conn_str"`
-	JwtSecret      string        `yaml:"jwt_secret"`
-	Salt           string        `yaml:"salt"`
 	MigrationsPath string        `yaml:"migrations_path"`
 	TokenTTL       time.Duration `yaml:"token_ttl"`
 	TimeoutDB      time.Duration `yaml:"timeout_db"`
-	Http           HttpConfig    `yaml:"http"`
-	GRPC           GRPCConfig    `yaml:"grpc"`
 }
 
 func Load(path string) (*Config, error) {

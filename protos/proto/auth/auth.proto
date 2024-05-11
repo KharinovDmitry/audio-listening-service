@@ -5,32 +5,16 @@ package auth;
 option go_package = "audio-streaming/auth-service;auth";
 
 service Auth {
-  rpc RegisterArtist (RegisterArtistRequest) returns (RegisterResponse);
-  rpc RegisterListener (RegisterListenerRequest) returns (RegisterResponse);
-  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc CheckToken (CheckTokenRequest) returns (CheckTokenResponse);
 }
 
 
-message RegisterArtistRequest {
-  string login = 1;
-  string password = 2;
-  string name = 3;
-}
-
-message RegisterListenerRequest {
-  string login = 1;
-  string password = 2;
-}
-
-message RegisterResponse {
-  int64 user_id = 1;
-}
-
-message LoginRequest {
-  string login = 1;
-  string password = 2;
-}
-
-message LoginResponse {
+message CheckTokenRequest {
   string token = 1;
+}
+
+message CheckTokenResponse {
+  int32 id = 1;
+  string login = 2;
+  string role = 3;
 }
